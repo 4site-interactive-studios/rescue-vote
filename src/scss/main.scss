@@ -1,0 +1,34 @@
+// @import "reset";
+@import "breakpoint-sass";
+@import "breakpoint-slicer";
+$slicer-breakpoints: 0 400px 775px 1200px 1440px;
+
+$txt: #000;
+$accent: #007cf9;
+
+#app-root {
+  main > div:first-child {
+    padding: 0 !important;
+    max-width: 1248px;
+    @include to(2) {
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+  }
+}
+
+#ifawCards {
+  margin: 90px auto;
+  h1 {
+    font-size: 60px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: -1.5px;
+    color: $txt;
+    strong {
+      color: $accent;
+    }
+  }
+}
