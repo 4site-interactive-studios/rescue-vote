@@ -1,4 +1,4 @@
-# [IFAW] Splash Rescue Vote Script
+# Rescue Vote Script
 
 ## Install Dependencies
 
