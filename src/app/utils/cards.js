@@ -79,22 +79,19 @@ export class Cards {
     title.remove();
 
     // Create an event to get user's click on the cards
-    document.getElementById("ifawCards").addEventListener("click", event => {
-      let target = event.target;
-      // If the Card Link was clicked
-      if (target.classList.contains("card-link")) {
+    let cardLinks = document.querySelectorAll(".card-link");
+    Array.from(cardLinks).forEach(link => {
+      link.addEventListener("click", event => {
         // Run an awesome animation
-        target.classList.toggle("animate");
-        window.setTimeout(() => target.classList.add("animated"), 1000);
-
+        link.classList.toggle("animate");
+        window.setTimeout(() => link.classList.add("animated"), 1000);
         // Redirect user to data-link attribute
-
-        if ("link" in target.dataset && target.dataset.link) {
-          let href = target.dataset.link;
+        if ("link" in link.dataset && link.dataset.link) {
+          let href = link.dataset.link;
           window.setTimeout(() => (window.location.href = href), 1500);
         }
-      }
-      event.preventDefault();
+        event.preventDefault();
+      });
     });
   }
 }
