@@ -5,7 +5,7 @@ export class Cards {
       {
         title: "",
         paragraph: "",
-        cards: [],
+        items: [],
         debug: false
       },
       options
@@ -15,46 +15,86 @@ export class Cards {
       return false;
     }
 
-    let cards = "";
-    this.options.cards.forEach(card => {
-      cards += `
+    let items = "";
+    this.options.items.forEach(card => {
+      card = Object.assign(
+        {
+          title: "",
+          paragraph: "",
+          checkbox: "",
+          image: "",
+          cta_link: [],
+          cta_label: []
+        },
+        card
+      );
+      items += `
       <div class="card" style="background-image: url('${card.image}');">
-      <h2>${card.title}</h2>
-      <a class="cta" href="${card.cta_link}">${card.cta_label}</a>
+        <a class="card-link" href="#" data-link="${card.cta_link}">
+          <h2 class="card-title"><span>${card.title}</span></h2>
+          <p class="card-description">${card.paragraph}</p>
+          <div class="card-checkbox">
+            ${card.checkbox}
+          </div>
+          <span class="cta" >${card.cta_label}</span>
+          
+        </a>
       </div>
       `;
     });
 
     const markup = `
     <div class="cards-container">
-        <div class="container ${this.options.align}">
-          <h1 class="title"><span>${this.options.title}</span></h1>
-          <p>${this.options.paragraph}</p>
+        <div class="container">
+          <h1 class="title">${this.options.title}</h1>
+          <p class="description">${this.options.paragraph}</p>
           <div class="cards">
-            ${cards}
+            ${items}
           </div>
         </div>
     </div>`;
     // We need that timeout to FIGHT the CMS
-    window.setTimeout(this.writeCards.bind(this, markup), 500);
+    //window.setTimeout(this.writeCards.bind(this, markup), 1000);
+    this.writeCards(markup);
   }
   shouldRun() {
     if (this.options.debug) {
       console.log("Options", this.options);
     }
-    return this.options.cards.length > 0;
+    return this.options.items.length > 0;
   }
   writeCards(markup) {
-    let title = document
-      .getElementById("app-root")
-      .getElementsByTagName("h1")[0];
+    // Get the Page's H1
+    let title = document.getElementById("app-root").querySelector("h1");
 
+    // Create a new Container
     let container = document.createElement("div");
+    // Assign an ID to the Container
     container.id = "ifawCards";
+    // Add the markup as content
     container.innerHTML = markup;
-
+    // Get the next element after the H1 (a DIV) and append everything to it
     title.nextSibling.append(container);
+    // Delete the original H1
     title.remove();
-    console.log(markup);
+
+    // Create an event to get user's click on the cards
+    document.getElementById("ifawCards").addEventListener("click", event => {
+      event.preventDefault();
+      let target = event.target;
+      // If the Card Link was clicked
+      if (target.classList.contains("card-link")) {
+        // Run an awesome animation
+        target.classList.toggle("animate");
+        window.setTimeout(() => target.classList.add("animated"), 1000);
+
+        // Redirect user to data-link attribute
+
+        if ("link" in target.dataset && target.dataset.link) {
+          let href = target.dataset.link;
+          window.setTimeout(() => (window.location.href = href), 1500);
+        }
+      }
+    });
   }
 }
