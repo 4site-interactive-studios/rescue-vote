@@ -80,7 +80,6 @@ export class Cards {
 
     // Create an event to get user's click on the cards
     document.getElementById("ifawCards").addEventListener("click", event => {
-      event.preventDefault();
       let target = event.target;
       // If the Card Link was clicked
       if (target.classList.contains("card-link")) {
@@ -95,6 +94,7 @@ export class Cards {
           window.setTimeout(() => (window.location.href = href), 1500);
         }
       }
+      event.preventDefault();
     });
   }
 }
