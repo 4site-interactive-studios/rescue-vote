@@ -15,6 +15,10 @@ $accent: #007cf9;
       padding-left: 16px !important;
       padding-right: 16px !important;
     }
+    & > div > div > div > div:first-child,
+    & > div:last-child {
+      display: none;
+    }
   }
 }
 
@@ -46,6 +50,9 @@ $accent: #007cf9;
     @include from(3) {
       display: flex;
       flex-flow: row wrap;
+      justify-content: space-evenly;
+    }
+    @include from(5) {
       justify-content: space-around;
     }
     .card {
@@ -71,7 +78,7 @@ $accent: #007cf9;
         bottom: 0;
         transition: 0.4s background-color ease;
         background-color: transparent;
-        &:hover {
+        &:not(.disabled):hover {
           background-color: #fff;
           .card-description,
           .card-checkbox {
@@ -178,6 +185,9 @@ $accent: #007cf9;
         padding: 12px 15px;
         background-color: $accent;
         transition: 0.4s opacity ease-in-out;
+      }
+      &.disabled {
+        filter: grayscale(100%);
       }
     }
   }

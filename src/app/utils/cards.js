@@ -75,20 +75,27 @@ export class Cards {
     container.innerHTML = markup;
     // Get the next element after the H1 (a DIV) and append everything to it
     title.nextSibling.append(container);
-    // Delete the original H1
-    title.remove();
 
     // Create an event to get user's click on the cards
     let cardLinks = document.querySelectorAll(".card-link");
     Array.from(cardLinks).forEach(link => {
       link.addEventListener("click", event => {
-        // Run an awesome animation
-        link.classList.toggle("animate");
-        window.setTimeout(() => link.classList.add("animated"), 1000);
-        // Redirect user to data-link attribute
-        if ("link" in link.dataset && link.dataset.link) {
-          let href = link.dataset.link;
-          window.setTimeout(() => (window.location.href = href), 1500);
+        if (!link.parentElement.classList.contains("disabled")) {
+          // Disable all other links
+          Array.from(cardLinks).forEach(otherLink => {
+            if (otherLink !== link) {
+              otherLink.parentElement.classList.add("disabled");
+              otherLink.classList.add("disabled");
+            }
+          });
+          // Run an awesome animation
+          link.classList.toggle("animate");
+          window.setTimeout(() => link.classList.add("animated"), 1000);
+          // Redirect user to data-link attribute
+          if ("link" in link.dataset && link.dataset.link) {
+            let href = link.dataset.link;
+            window.setTimeout(() => (window.location.href = href), 1500);
+          }
         }
         event.preventDefault();
       });
