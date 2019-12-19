@@ -188,6 +188,32 @@ $accent: #007cf9;
       }
       &.disabled {
         filter: grayscale(100%);
+        .cta {
+          color: #000;
+          background-color: #fff;
+        }
+        .card-link:hover {
+          background-color: transparent;
+          .card-description,
+          .card-checkbox {
+            opacity: 0;
+          }
+          .cta {
+            opacity: 1;
+          }
+        }
+      }
+      &.no-hover {
+        .card-link:hover {
+          background-color: transparent;
+          .card-description,
+          .card-checkbox {
+            opacity: 0;
+          }
+          .cta {
+            opacity: 1;
+          }
+        }
       }
     }
   }

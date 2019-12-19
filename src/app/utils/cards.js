@@ -23,13 +23,16 @@ export class Cards {
           paragraph: "",
           checkbox: "",
           image: "",
-          cta_link: [],
-          cta_label: []
+          cta_link: "",
+          cta_label: ""
         },
         card
       );
+
       items += `
-      <div class="card" style="background-image: url('${card.image}');">
+      <div class="card ${!card.cta_link ? "disabled" : ""} ${
+        !card.paragraph ? "no-hover" : ""
+      }" style="background-image: url('${card.image}');">
         <a class="card-link" href="#" data-link="${card.cta_link}">
           <h2 class="card-title"><span>${card.title}</span></h2>
           <p class="card-description">${card.paragraph}</p>
@@ -88,13 +91,19 @@ export class Cards {
               otherLink.classList.add("disabled");
             }
           });
-          // Run an awesome animation
-          link.classList.toggle("animate");
-          window.setTimeout(() => link.classList.add("animated"), 1000);
-          // Redirect user to data-link attribute
-          if ("link" in link.dataset && link.dataset.link) {
+          // If the parent is a no-hover, redirect right away
+          if (link.parentElement.classList.contains("no-hover")) {
             let href = link.dataset.link;
-            window.setTimeout(() => (window.location.href = href), 1500);
+            window.location.href = href;
+          } else {
+            // Run an awesome animation
+            link.classList.toggle("animate");
+            window.setTimeout(() => link.classList.add("animated"), 1000);
+            // Redirect user to data-link attribute
+            if ("link" in link.dataset && link.dataset.link) {
+              let href = link.dataset.link;
+              window.setTimeout(() => (window.location.href = href), 1500);
+            }
           }
         }
         event.preventDefault();
